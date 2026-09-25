@@ -3,18 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello Web</title>
+    <title>Home | MoneyMind Games</title>
+    <meta name="description" content="Financial literacy for kids! Teach saving, budgeting, and investing basics with fun, interactive games for home or classroom use." />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <main>
-      <p class="eyebrow">hello-web</p>
-      <h1>A small site on GitHub.</h1>
-      <p class="lede">
-        This is a starter page. Edit <code>index.html</code> and
-        <code>styles.css</code>, then push your changes.
-      </p>
-      <p class="meta">Open this file in a browser to see it live.</p>
-    </main>
+  <body class="home">
+    <div class="promo">Purchase Two Games for Free Shipping</div>
+    <header class="site-header">
+      <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="the-problem.html">The Problem</a>
+        <a href="investquest.html">InvestQuest</a>
+        <a href="impact.html">Our Impact</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="contact.html">Contact Us</a>
+        <a class="btn" href="investquest.html#buy">Shop</a>
+      </nav>
+    </header>
+
+    <section class="home-hero">
+      <div class="wrap home-hero-grid">
+        <div>
+          <p class="kicker">Highschool Initiative</p>
+          <h1>Building financial foundations, <span class="green">one game at a time.</span></h1>
+          <p class="lede">InvestQuest for ages 8+.</p>
+          <div class="actions">
+            <a class="btn" href="investquest.html#buy">Shop InvestQuest</a>
+            <a class="btn ghost" href="investquest.html#how-to-play">See how it works</a>
+          </div>
+        </div>
+        <!-- Replace this frame with your photo:
+             <img class="photo-slot" src="assets/students-playing.jpg" alt="Students playing InvestQuest" /> -->
+        <div class="photo-slot" role="img" aria-label="Space for a photo of students playing the game"></div>
+      </div>
+    </section>
+
+    <section class="home-band">
+      <div class="wrap quote-row">
+        <blockquote class="quote-red">
+          <p>“My kids love this!”</p>
+          <footer>Parent</footer>
+        </blockquote>
+        <blockquote class="quote-green">
+          <p>“Now this is real teaching made fun.”</p>
+          <footer>Teacher</footer>
+        </blockquote>
+        <blockquote class="quote-red">
+          <p>“So needed. Teach them young.”</p>
+          <footer>Educator</footer>
+        </blockquote>
+        <blockquote class="quote-green">
+          <p>“What you guys are doing is fantastic.”</p>
+          <footer>Community program leader</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="home-paths">
+      <div class="wrap path-row">
+        <a class="path-red" href="investquest.html">For families <span aria-hidden="true">→</span></a>
+        <a class="path-green" href="contact.html">For educators / schools <span aria-hidden="true">→</span></a>
+        <a class="path-red" href="impact.html">For community programs <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="wrap metric-row">
+        <article>
+          <strong class="metric-red">47,000</strong>
+          <span>students reached</span>
+        </article>
+        <article>
+          <strong class="metric-green">600</strong>
+          <span>educators</span>
+        </article>
+        <article>
+          <strong class="metric-red">4.94/5</strong>
+          <span>average rating amongst parents and educators</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="home-story">
+      <div class="wrap story-grid">
+        <!-- Replace with your photo:
+             <img class="photo-slot" src="assets/our-story.jpg" alt="Our story" /> -->
+        <div class="photo-slot" role="img" aria-label="Space for an Our Story photo"></div>
+        <div>
+          <h2>Our <span class="green">Story</span></h2>
+          <p>MoneyMind Games didn't start in a boardroom. It started in a high school business class, with one question: what if learning personal finance could be as fun as playing a game?</p>
+          <p>That question became InvestQuest. It teaches kids to invest, budget, and handle taxes by playing, so the next generation can grow up with a stronger financial foundation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-product">
+      <div class="wrap">
+        <h2>Meet <span class="green">InvestQuest.</span></h2>
+        <div class="fact-row">
+          <article><span class="fact-red">2–4</span> players</article>
+          <article><span class="fact-green">Ages</span> 8+</article>
+          <article><span class="fact-red">Learn</span> by playing</article>
+          <article><span class="fact-green">Real-world</span> money skills</article>
+        </div>
+        <div class="product-shots">
+          <!-- Replace each frame with an image, for example:
+               <img class="photo-slot photo-slot-light" src="assets/investquest-1.jpg" alt="InvestQuest" /> -->
+          <div class="photo-slot photo-slot-light" role="img" aria-label="Space for an InvestQuest photo"></div>
+          <div class="photo-slot photo-slot-light" role="img" aria-label="Space for an InvestQuest photo"></div>
+          <div class="photo-slot photo-slot-light" role="img" aria-label="Space for an InvestQuest photo"></div>
+        </div>
+        <p class="product-action"><a class="btn" href="investquest.html">Explore InvestQuest</a></p>
+      </div>
+    </section>
+
+    <section class="home-awards">
+      <div class="wrap">
+        <h2><span class="green">Awards</span> and Recognition</h2>
+        <div class="award-row">
+          <article>
+            <!-- Replace with an award photo:
+                 <img class="photo-slot photo-slot-short" src="assets/award-deca.jpg" alt="DECA ICDC award" /> -->
+            <div class="photo-slot photo-slot-short" role="img" aria-label="Space for the DECA ICDC award photo"></div>
+            <p class="place">1st Place</p>
+            <h3>DECA ICDC</h3>
+            <p>Financial Literacy Project</p>
+          </article>
+          <article>
+            <!-- Replace with an award photo:
+                 <img class="photo-slot photo-slot-short" src="assets/award-capital-cup.jpg" alt="The Capital Cup award" /> -->
+            <div class="photo-slot photo-slot-short" role="img" aria-label="Space for The Capital Cup award photo"></div>
+            <p class="place">1st Place</p>
+            <h3>The Capital Cup</h3>
+            <p>Entrepreneurial Challenge</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-close">
+      <div class="wrap">
+        <h2>Ready to build <span class="green">financial foundations?</span></h2>
+        <div class="actions">
+          <a class="btn" href="investquest.html">Explore InvestQuest</a>
+          <a class="btn ghost" href="investquest.html#how-to-play">See how it works</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <div>
+          <strong>MoneyMind Games</strong>
+          <p class="fine">© 2026 MoneyMind Games</p>
+        </div>
+        <div class="socials">
+          <a href="mailto:gamesmoneymind@gmail.com">Email</a>
+          <a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a>
+          <a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a>
+        </div>
+      </div>
+    </footer>
+    <script src="script.js"></script>
   </body>
 </html>
