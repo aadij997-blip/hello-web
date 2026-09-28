@@ -817,21 +817,26 @@ img.photo-slot {
   justify-content: center;
   min-height: calc(100svh - var(--header) - 2.8rem);
   padding: 2.5rem 0 5.5rem;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.44) 46%, rgba(0, 0, 0, 0.64) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.46) 45%, rgba(0, 0, 0, 0.66)),
+    url("assets/problem-hero.webp") center 42% / cover no-repeat;
 }
 
 .prob-hero-grid {
   display: grid;
-  grid-template-columns: 1.35fr 0.7fr;
-  gap: 3rem;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2.5rem;
   align-items: center;
 }
 
 .prob-hero-aside {
   margin: 0;
-  color: var(--muted);
-  font-size: 1.2rem;
-  line-height: 1.45;
-  max-width: 22rem;
+  color: #f2f2f2;
+  font-size: clamp(1.45rem, 2.15vw, 1.85rem);
+  line-height: 1.4;
+  max-width: none;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
 }
 
 .prob-scroll {
@@ -1059,8 +1064,8 @@ img.photo-slot {
 .cost-row .cost-red { border-color: rgba(250, 80, 80, 0.75); }
 
 .cost-icon {
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
   display: grid;
   place-items: center;
   border-radius: 16px;
@@ -1076,7 +1081,7 @@ img.photo-slot {
   border-color: rgba(250, 80, 80, 0.45);
 }
 
-.cost-icon svg { width: 30px; height: 30px; }
+.cost-icon svg { width: 46px; height: 46px; }
 
 .cost-row h3 { margin: 0 0 0.45rem; font-size: 1.35rem; }
 
@@ -1174,4 +1179,309 @@ img.photo-slot {
     border-left: 0;
     padding-left: 0;
   }
+}
+
+.invest h1,
+.invest h2 { font-weight: 700; line-height: 1.05; }
+
+.invest h1 {
+  font-size: clamp(2.6rem, 4.8vw, 4.4rem);
+  margin: 0;
+}
+
+.invest h2 { font-size: clamp(2.2rem, 4.2vw, 3.5rem); margin: 0; }
+
+.iq-hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100svh - var(--header) - 2.8rem);
+  padding: 2.5rem 0 5.5rem;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.48) 48%, rgba(0, 0, 0, 0.66) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.42) 46%, rgba(0, 0, 0, 0.68)),
+    #111 url("assets/investquest-hero.png") center / cover no-repeat;
+}
+
+.iq-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.iq-aside {
+  margin: 0;
+  color: #f2f2f2;
+  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  line-height: 1.4;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+}
+
+.iq-field { position: relative; }
+
+.iq-fit,
+.iq-works,
+.iq-learn,
+.iq-media,
+.iq-close {
+  position: relative;
+  z-index: 1;
+}
+
+.iq-fit { padding: 4.8rem 0 2rem; }
+
+.iq-rule { display: flex; align-items: center; gap: 0.7rem; }
+.iq-rule::before {
+  content: "";
+  width: 1.6rem;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--green);
+}
+
+.iq-fit-head,
+.iq-learn-head {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+.iq-fit-head p,
+.iq-sub { margin: 0.8rem 0 0; color: var(--muted); font-size: 1.15rem; }
+
+.iq-fit-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.iq-fit-row article {
+  background: #101010;
+  border: 1.5px solid rgba(147, 209, 46, 0.75);
+  border-radius: 22px;
+  padding: 0.7rem 0.7rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.iq-frame {
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  background: #1b1b1b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.iq-fit-copy { position: relative; padding: 0 0.45rem; min-height: 7.2rem; }
+.iq-fit-copy h3 { margin: 0 0 0.35rem; font-size: 1.45rem; }
+.iq-fit-copy p { margin: 0; color: var(--muted); max-width: 16rem; }
+
+.iq-mark {
+  position: absolute;
+  right: 0.2rem;
+  bottom: 0;
+  width: 52px;
+  height: 52px;
+  color: var(--green);
+}
+
+.iq-mark-red { color: var(--red); }
+
+.iq-fit-row .iq-btn { margin: 0 0.45rem; align-self: flex-start; }
+
+.iq-btn { border-radius: 999px; }
+.iq-btn-red { background: var(--red); color: #fff; }
+
+.iq-works { padding: 4.5rem 0 5.5rem; }
+
+.iq-works-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.iq-steps {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1.35rem;
+}
+
+.iq-steps li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.iq-num {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: #111;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.iq-num-red { background: var(--red); color: #fff; }
+
+.iq-steps h3 { margin: 0 0 0.15rem; font-size: 1.2rem; }
+.iq-steps p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.iq-steps svg { width: 58px; height: 58px; color: #fff; }
+
+.iq-video-wrap { position: relative; }
+
+.iq-screen {
+  border: 2px solid var(--green);
+  border-radius: 22px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16 / 10;
+}
+
+.iq-screen iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+.iq-learn { padding: 2rem 0 2.5rem; }
+
+.iq-media { padding: 1.5rem 0 3.5rem; }
+.iq-media h2 { margin-bottom: 1.4rem; }
+
+.iq-media-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.iq-media-row h3 { margin: 0.85rem 0 0; font-size: 1.2rem; }
+
+.iq-close-frame {
+  align-self: stretch;
+  aspect-ratio: auto;
+  height: auto;
+  min-height: 240px;
+}
+
+.iq-badge {
+  justify-self: end;
+  margin: 0;
+  background: #141414;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  transform: rotate(3deg);
+}
+
+.iq-path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.8rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.iq-path::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 106px;
+  height: 3px;
+  background: var(--green);
+  border-radius: 99px;
+}
+
+.iq-path article { position: relative; z-index: 1; }
+.iq-path h3 { margin: 0.7rem 0 0.25rem; font-size: 1.15rem; }
+.iq-path p { margin: 0 auto; color: var(--muted); font-size: 0.92rem; max-width: 12rem; }
+
+.iq-blob {
+  width: 92px;
+  height: 84px;
+  margin: 0 auto 0.7rem;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: #111;
+  border-radius: 46% 54% 48% 52%;
+}
+
+.iq-blob svg { width: 48px; height: 48px; }
+.iq-blob-red { background: var(--red); color: #fff; }
+
+.iq-dot {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #111;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.iq-close { padding: 1rem 0 4.5rem; }
+
+.iq-close-panel {
+  background: #141414;
+  border-radius: 28px;
+  padding: 2.2rem 2rem;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.iq-close-panel p { margin: 0.8rem 0 0; color: var(--muted); font-size: 1.15rem; }
+
+.iq-actions { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.3rem; }
+
+.iq-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.2rem;
+  margin: 1.3rem 0 0;
+  padding: 0;
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.iq-facts li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.iq-facts svg { width: 22px; height: 22px; color: var(--green); }
+
+@media (max-width: 860px) {
+  .iq-hero { min-height: 0; padding: 2.2rem 0 2.5rem; }
+  .iq-hero .prob-scroll { position: static; transform: none; margin: 1.6rem auto 0; }
+  .iq-hero-grid,
+  .iq-fit-head,
+  .iq-learn-head,
+  .iq-works-grid,
+  .iq-fit-row,
+  .iq-close-panel,
+  .iq-media-row,
+  .iq-path { grid-template-columns: 1fr; }
+  .iq-badge { justify-self: start; transform: none; }
+  .iq-path::before { display: none; }
+  .iq-fit-copy { min-height: 0; }
+  .iq-mark { position: static; display: block; margin-top: 0.6rem; }
 }
