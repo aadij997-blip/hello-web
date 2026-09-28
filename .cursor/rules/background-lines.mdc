@@ -1,0 +1,27 @@
+---
+description: Background line style for MoneyMind pages, taken from the Problem page
+globs: "**/*.{html,css}"
+alwaysApply: false
+---
+
+# Background lines
+
+Use this when a page needs the green and red background strokes. The Problem page (`.prob-field` / `.prob-wander` in `the-problem.html` and `styles.css`) is the reference.
+
+- One SVG behind the whole black region of the page. Strokes wander that region as a single place. Do not restart, crop, or clip them per section.
+- A few separate strokes, green `var(--green)` and red `var(--red)`. Each stroke is one wide, lazy bow. Keep turns broader and less frequent than the homepage ribbons in `assets/flow-lines.png`.
+- Match the homepage stroke thickness: `stroke-width: 4.85vw` with `vector-effect: non-scaling-stroke`. Sit them further back with `opacity: 0.42`.
+- Draw paths in a `viewBox="0 0 100 100"` SVG with `preserveAspectRatio="none"`. Start and end each path well outside the box (around `-40` and `140`) so the stroke leaves through the outer edge. Round caps stay off-canvas.
+- Keep the bows in the side margins so headlines stay clear. Opaque cards may cover a stroke; the stroke itself still continues behind them.
+- Stop the layer before a photographic background. On the Problem page the lines end at `.prob-cost` and do not cross `.prob-solution`.
+- Put the SVG absolutely in a relative wrapper (`inset: 0`, `z-index: 0`, `pointer-events: none`). Sections above it are `position: relative; z-index: 1` and stay transparent. Do not put `overflow: hidden` on those sections.
+
+```html
+<div class="prob-field">
+  <svg class="prob-wander" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="wander-red" d="M-40 2C14 18 12 42-40 55"/>
+    <path class="wander-green" d="M140 0C82 20 84 48 140 62"/>
+  </svg>
+  <!-- sections -->
+</div>
+```

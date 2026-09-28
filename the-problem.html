@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Problem | MoneyMind Games</title>
-    <meta name="description" content="Addressing the global financial literacy crisis: Empowering youth with essential money skills for a secure future." />
+    <meta name="description" content="Students are leaving school without the money skills they need. MoneyMind Games makes financial literacy hands-on." />
     <link rel="icon" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=26" />
   </head>
-  <body>
+  <body class="problem">
     <div class="promo">Purchase Two Games for Free Shipping</div>
     <header class="site-header">
       <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
@@ -26,89 +26,167 @@
       </nav>
     </header>
 
-    <section class="section">
-      <div class="wrap">
-        <p class="kicker">The Problem</p>
-        <h1>A Global Financial Illiteracy Crisis</h1>
-        <p class="lede">Financial literacy: a skill that is arguably one of the most important to have in today’s society — yet less than half of all teenagers and adults have it.</p>
+    <div class="prob-field">
+    <svg class="prob-wander" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path class="wander-red" d="M-40 2C14 18 12 42-40 55"/>
+      <path class="wander-green" d="M140 0C82 20 84 48 140 62"/>
+      <path class="wander-green" d="M-40 48C16 64 13 84-40 98"/>
+      <path class="wander-red" d="M140 50C80 66 83 88 140 104"/>
+    </svg>
+    <section class="prob-hero">
+      <div class="wrap prob-hero-grid">
+        <div>
+          <p class="kicker">The Problem</p>
+          <h1>Students are leaving school <span class="green">without the money skills they need.</span></h1>
+        </div>
+        <p class="prob-hero-aside">Financial literacy shapes confidence, choices, and opportunity. Yet too many young people reach adulthood without the basics.</p>
       </div>
+      <a class="prob-scroll" href="#why-early">
+        <span>Scroll to explore</span>
+        <span class="prob-scroll-line" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </section>
 
-    <section class="section alt">
-      <div class="wrap split">
-        <img src="assets/problem-students.jpg" alt="Students in a classroom" />
-        <div>
-          <p class="kicker">Why it matters</p>
-          <h2>The Gap Starts Early, and Compounds</h2>
-          <p>Due to gaps in the education system, limited access to resources, and the complex nature of finance itself, billions of people across the globe struggle with managing their money, leaving them unable to establish financial stability.</p>
-          <p>At MoneyMind Games, we focus on financial literacy for kids because giving kids early exposure to money management can change the trajectory of their futures. We strive to provide younger generations with opportunities to expand their knowledge of budgeting, investing, and real-world decision-making. By making financial literacy for kids engaging and accessible, we help them enter adulthood with a strong financial foundation to lean on, ultimately setting them up for a lifetime of success.</p>
+    <section class="prob-early" id="why-early">
+      <div class="wrap prob-early-grid">
+        <div class="prob-frame" role="img" aria-label="Space for a classroom photo">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <rect x="6" y="10" width="36" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <circle cx="18" cy="21" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+            <path d="m8 34 10-9 7 6 5-4 10 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+          <span>Classroom image</span>
+        </div>
+        <div class="prob-early-copy">
+          <p class="kicker">Why it starts early</p>
+          <h2>The gap starts before adulthood, and it compounds.</h2>
+          <p>Kids face real financial decisions long before they reach adulthood, but many do not have access to the tools or knowledge to navigate them.</p>
+          <p>Without early exposure, small gaps in money skills can grow over time, making it harder to build confidence and financial stability later in life.</p>
+          <div class="prob-note">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 4a8 8 0 0 0-4 15v2h8v-2a8 8 0 0 0-4-15Z" fill="none" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M13 24h6M14 27h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+            <p>Money skills are easier to build <span class="green">before the stakes are high.</span></p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="wrap stats">
-        <article class="stat">
-          <strong>37%</strong>
-          <p>Financial literacy rate among Gen Z — the lowest of any generation</p>
-          <span class="source">2024 TIAA Institute-GFLEC Personal Finance Index</span>
-        </article>
-        <article class="stat">
-          <strong>88%</strong>
-          <p>U.S. adults who said high school left them unprepared to handle money</p>
-          <span class="source">Ramsey Solutions</span>
-        </article>
-        <article class="stat">
-          <strong>48%</strong>
-          <p>Americans hold zero investment assets due to lack of understanding</p>
-          <span class="source">Janus Henderson Investors</span>
-        </article>
-        <article class="stat">
-          <strong>16%</strong>
-          <p>Adults aged 18–26 who feel optimistic about their financial future</p>
-          <span class="source">Bank of America</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="section alt">
+    <section class="prob-gaps">
       <div class="wrap">
-        <h2>Financial Illiteracy Costs More Than Money</h2>
-        <p class="lede">The problem isn't just about numbers — it's about access, confidence, and opportunity. When kids grow up without financial knowledge, the consequences extend far beyond their bank accounts.</p>
-        <div class="grid-2">
-          <article class="card">
-            <img src="assets/icon-setbacks.png" alt="" />
-            <h3>Setbacks Compound</h3>
-            <p>Without budgeting and investing knowledge, young adults are more likely to fall into debt and delay wealth-building, missing out on years of compound growth that can translate into hundreds of thousands of dollars over a lifetime.</p>
+        <h2>Why financial literacy <span class="green">still falls short.</span></h2>
+        <p class="prob-sub">The problem is not one missing lesson. It is a system with three connected gaps.</p>
+        <div class="gap-row">
+          <article>
+            <div class="gap-media">
+              <img src="assets/gap-engagement.png" alt="Students gathered around a table playing a financial literacy card game" />
+            </div>
+            <div class="gap-body">
+              <p class="gap-num">01</p>
+              <h3>The Engagement Gap</h3>
+              <p>Money is often taught through passive lectures and worksheets.</p>
+              <p class="gap-label">MoneyMind response</p>
+              <p class="gap-response">Turn learning into gameplay, decisions, and discussion.</p>
+            </div>
           </article>
-          <article class="card">
-            <img src="assets/icon-social.png" alt="" />
-            <h3>Social Consequences</h3>
-            <p>Financial illiteracy disproportionately impacts underserved communities, widening generational wealth gaps while contributing to significant financial stress and anxiety among young adults.</p>
+          <article>
+            <div class="gap-media">
+              <img src="assets/gap-educator.png" alt="An educator guiding two students through a lesson booklet" />
+            </div>
+            <div class="gap-body">
+              <p class="gap-num">02</p>
+              <h3>The Educator Support Gap</h3>
+              <p>Educators need stronger training, curriculum, and implementation tools.</p>
+              <p class="gap-label">MoneyMind response</p>
+              <p class="gap-response">Pair InvestQuest with ready-to-use lessons and educator training.</p>
+            </div>
+          </article>
+          <article>
+            <div class="gap-media">
+              <img src="assets/gap-adoption.png" alt="A school building connected to a long path of approval steps" />
+            </div>
+            <div class="gap-body">
+              <p class="gap-num">03</p>
+              <h3>The Adoption Gap</h3>
+              <p>School approvals and competing priorities can delay important lessons.</p>
+              <p class="gap-label">MoneyMind response</p>
+              <p class="gap-response">Offer flexible programs that fit classrooms, libraries, and expanded learning.</p>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" style="background: #111 url('assets/packaging.png') center/cover;">
-      <div class="wrap" style="background: rgba(0,0,0,0.72); padding: 2rem; border-radius: 16px;">
-        <p class="kicker">Our solution</p>
-        <h2>We make learning about money actually fun</h2>
-        <p>MoneyMind Games was built by teens who noticed the gap firsthand. Our flagship product, InvestQuest, turns complex financial concepts—portfolios, taxes, risk, and investing—into a fun 2–4 player card game for kids ages 8+. Through classroom showcases, library events, and educator workshops, we make financial literacy engaging and accessible for students and families.</p>
-        <a class="btn" href="investquest.html">See InvestQuest</a>
+    <section class="prob-cost">
+      <div class="wrap">
+        <p class="kicker">The cost of waiting</p>
+        <h2>The cost of waiting is measured in <span class="green">missed practice.</span></h2>
+        <div class="cost-row">
+          <article class="cost-green">
+            <span class="cost-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><circle cx="16" cy="9" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9 20.5c.8-4 3.2-6 7-6s6.2 2 7 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16 16v9M12.5 21.5 16 25l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>Less confidence</h3>
+            <p>Without early practice, money feels confusing and overwhelming, so students doubt their decisions.</p>
+          </article>
+          <article class="cost-red">
+            <span class="cost-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M16 24V10M16 10l-3.5 3.5M16 10l3.5 3.5M9 16l-3-2.5.8 4M23 16l3-2.5-.8 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>Fewer choices</h3>
+            <p>Delayed financial knowledge leads to limited options in college, career, and life.</p>
+          </article>
+          <article class="cost-green">
+            <span class="cost-icon" aria-hidden="true">
+              <svg viewBox="0 0 32 32"><path d="M10 20h12a4 4 0 0 0 .4-8 6 6 0 0 0-11.5-1.5A4.2 4.2 0 0 0 10 20Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m15.5 17-2 4.5h3.4L15 26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h3>More stress</h3>
+            <p>Financial uncertainty creates ongoing anxiety that can affect mental health and well-being.</p>
+          </article>
+        </div>
+        <h2 class="prob-bridge">The solution has to change <span class="green">how students learn.</span></h2>
+        <a class="prob-down" href="#solution" aria-label="Continue to the solution">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+    </div>
+
+    <section class="prob-solution" id="solution">
+      <div class="wrap">
+        <div class="solution-panel">
+          <p class="kicker">Our solution</p>
+          <h2>Make learning about money actually fun</h2>
+          <p>InvestQuest is a hands-on 2 to 4 player card game for kids ages 8 and older. It turns real financial concepts into engaging gameplay. Paired with curriculum and educator support, it brings financial literacy to life in and out of the classroom.</p>
+          <div class="actions">
+            <a class="btn" href="investquest.html">Explore InvestQuest <span aria-hidden="true">→</span></a>
+            <a class="btn ghost" href="contact.html">Bring it to your school <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <footer class="site-footer">
-      <div class="wrap footer-row">
+    <footer class="site-footer problem-footer">
+      <div class="wrap problem-footer-row">
         <div>
-          <strong>MoneyMind Games</strong>
+          <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
           <p class="fine">© 2026 MoneyMind Games</p>
         </div>
-        <div class="socials">
-          <a href="mailto:gamesmoneymind@gmail.com">Email</a>
-          <a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a>
-          <a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a>
+        <div class="problem-socials">
+          <a href="mailto:gamesmoneymind@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            Email
+          </a>
+          <a href="https://www.instagram.com/moneymindgamesofficial">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="0.8" fill="currentColor"/></svg>
+            Instagram
+          </a>
+          <a href="https://www.youtube.com/@moneymindgamesofficial">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m11 9.5 4 2.5-4 2.5v-5Z" fill="currentColor"/></svg>
+            YouTube
+          </a>
         </div>
       </div>
     </footer>
