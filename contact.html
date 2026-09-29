@@ -4,15 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us | MoneyMind Games</title>
-    <meta name="description" content="Contact MoneyMind Games to learn more about our financial literacy games for kids. Reach out via form, Instagram, or YouTube." />
+    <meta name="description" content="Contact MoneyMind Games as a family, educator, library, or youth program. Shop InvestQuest, request a quote, or book a visit." />
     <link rel="icon" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=46" />
   </head>
-  <body>
-    <div class="promo">Purchase Two Games for Free Shipping</div>
+  <body class="contact">
+    <div class="promo">Limited Time! Purchase Two Games for Free Shipping</div>
     <header class="site-header">
       <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
@@ -26,27 +26,169 @@
       </nav>
     </header>
 
-    <section class="section">
-      <div class="wrap">
-        <h1>Contact Us</h1>
-        <p class="lede">Reach out to us and let us know if there is anything we can do for you.</p>
-        <p>If you are an educator, reach out here to receive a quotation for a bulk purchase order or to book a guided activity session with us at your school. Guided activities are currently only available in the San Diego area.</p>
-        <form action="mailto:gamesmoneymind@gmail.com" method="post" enctype="text/plain">
-          <label>Name <input name="name" type="text" required /></label>
-          <label>Email <input name="email" type="email" required /></label>
-          <label>I am
-            <select name="role">
-              <option>A parent or family</option>
-              <option>An educator</option>
-              <option>Someone else</option>
-            </select>
-          </label>
-          <label>Message <textarea name="message" rows="6" required></textarea></label>
-          <button class="btn" type="submit">Send email</button>
-        </form>
-        <p class="fine">This opens an email to gamesmoneymind@gmail.com. You can also reach us on <a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a> or <a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a>.</p>
-      </div>
-    </section>
+    <div class="prob-field" data-contact>
+      <svg class="prob-wander" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path class="wander-red" d="M-40 2C14 18 12 42-40 55"/>
+        <path class="wander-green" d="M140 0C82 20 84 48 140 62"/>
+        <path class="wander-green" d="M-40 48C16 64 13 84-40 98"/>
+        <path class="wander-red" d="M140 50C80 66 83 88 140 104"/>
+      </svg>
+
+      <section class="section contact-hero">
+        <div class="wrap contact-hero-grid">
+          <div>
+            <p class="kicker">Contact</p>
+            <h1>Who's <span class="green">reaching out?</span></h1>
+          </div>
+          <p>Families, schools, libraries, and youth programs need different things. Pick a path and the questions match.</p>
+        </div>
+      </section>
+
+      <section class="section contact-stage">
+        <div class="wrap">
+          <div class="contact-roles" role="tablist" aria-label="Who is reaching out">
+            <button class="contact-role contact-role-red" type="button" role="tab" id="contact-tab-family" data-contact-tab="family" aria-controls="contact-panel-family" aria-selected="false">
+              <span class="contact-role-kicker">Play at home</span>
+              <span class="contact-role-title">Family</span>
+              <span class="contact-role-line">Buy a game, or ask about ages, players, and shipping.</span>
+            </button>
+            <button class="contact-role contact-role-green" type="button" role="tab" id="contact-tab-educator" data-contact-tab="educator" aria-controls="contact-panel-educator" aria-selected="false" tabindex="-1">
+              <span class="contact-role-kicker">Schools</span>
+              <span class="contact-role-title">Educator</span>
+              <span class="contact-role-line">A bulk quote, a classroom visit, or a workshop.</span>
+            </button>
+            <button class="contact-role contact-role-red" type="button" role="tab" id="contact-tab-program" data-contact-tab="program" aria-controls="contact-panel-program" aria-selected="false" tabindex="-1">
+              <span class="contact-role-kicker">Libraries &amp; groups</span>
+              <span class="contact-role-title">Program</span>
+              <span class="contact-role-line">Bring InvestQuest to a library or youth program.</span>
+            </button>
+            <button class="contact-role" type="button" role="tab" id="contact-tab-other" data-contact-tab="other" aria-controls="contact-panel-other" aria-selected="false" tabindex="-1">
+              <span class="contact-role-kicker">Everyone else</span>
+              <span class="contact-role-title">Something else</span>
+              <span class="contact-role-line">Press, a partnership, or a question that doesn't fit.</span>
+            </button>
+          </div>
+
+          <div class="contact-empty" data-contact-empty>
+            <p class="kicker">Next</p>
+            <h2>Pick a path. The form follows.</h2>
+            <p>A family buying a game, a teacher booking a class, and a library planning an event should not fill out the same note.</p>
+            <p class="fine">You can also reach us on <a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a> or <a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a>.</p>
+          </div>
+
+          <div class="contact-panel" id="contact-panel-family" data-contact-panel="family" role="tabpanel" aria-labelledby="contact-tab-family" hidden>
+            <div class="contact-brief">
+              <p class="kicker">Family</p>
+              <h2 tabindex="-1">Get InvestQuest home.</h2>
+              <p>The shop is the direct way to buy. Two games ship free for a limited time. Write if you still have a question about play.</p>
+              <ul>
+                <li>Ages 8+</li>
+                <li>2 to 4 players</li>
+                <li>Questions go to gamesmoneymind@gmail.com</li>
+              </ul>
+            </div>
+            <form data-subject="Family question">
+              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>Question</span><textarea name="message" rows="5" required placeholder="Ages, players, shipping, or anything else about playing at home."></textarea></label>
+              <div class="contact-actions">
+                <a class="btn" href="product.html">Shop InvestQuest</a>
+                <button class="btn ghost" type="submit">Send a question</button>
+              </div>
+              <p class="fine">Sending opens an email to gamesmoneymind@gmail.com.</p>
+            </form>
+          </div>
+
+          <div class="contact-panel" id="contact-panel-educator" data-contact-panel="educator" role="tabpanel" aria-labelledby="contact-tab-educator" hidden>
+            <div class="contact-brief">
+              <p class="kicker">Educator</p>
+              <h2 tabindex="-1">Bring it to class.</h2>
+              <p>Ask for a bulk quote, a guided classroom session, or an educator workshop. Workshops leave teachers with a curriculum they can use right away.</p>
+              <ul>
+                <li>Bulk quotes for classroom sets</li>
+                <li>Guided sessions are currently only in the San Diego area</li>
+                <li>Workshops cover how to play and how to teach it</li>
+              </ul>
+            </div>
+            <form data-subject="Educator inquiry">
+              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>School or district</span><input name="school" type="text" required /></label>
+              <label><span>City</span><input name="city" type="text" required autocomplete="address-level2" /></label>
+              <label><span>I need</span>
+                <select name="need" data-need required>
+                  <option value="" selected disabled>Choose one</option>
+                  <option>A bulk purchase quote</option>
+                  <option>A guided classroom session</option>
+                  <option>An educator workshop</option>
+                </select>
+              </label>
+              <label><span>About how many students</span><input name="students" type="text" inputmode="numeric" placeholder="Optional" /></label>
+              <label><span>Anything else</span><textarea name="message" rows="4" placeholder="Grade levels, timing, or what you hope students walk away with."></textarea></label>
+              <button class="btn" type="submit">Send to the team</button>
+              <p class="fine">Sending opens an email to gamesmoneymind@gmail.com.</p>
+            </form>
+          </div>
+
+          <div class="contact-panel" id="contact-panel-program" data-contact-panel="program" role="tabpanel" aria-labelledby="contact-tab-program" hidden>
+            <div class="contact-brief">
+              <p class="kicker">Program</p>
+              <h2 tabindex="-1">Plan a visit.</h2>
+              <p>Library events and youth programs are built for a group, not a single classroom order. Tell us where you are and who will be there.</p>
+              <ul>
+                <li>Library events for families and students</li>
+                <li>Youth programs and community groups</li>
+                <li>We'll follow up about a visit or a set of games</li>
+              </ul>
+            </div>
+            <form data-subject="Program request">
+              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>Organization</span><input name="organization" type="text" required /></label>
+              <label><span>City</span><input name="city" type="text" required autocomplete="address-level2" /></label>
+              <label><span>This is for</span>
+                <select name="need" data-need required>
+                  <option value="" selected disabled>Choose one</option>
+                  <option>A library event</option>
+                  <option>A youth program</option>
+                </select>
+              </label>
+              <label><span>What should we know</span><textarea name="message" rows="4" required placeholder="Who the event is for, and any dates you have in mind."></textarea></label>
+              <button class="btn" type="submit">Request a program</button>
+              <p class="fine">Sending opens an email to gamesmoneymind@gmail.com.</p>
+            </form>
+          </div>
+
+          <div class="contact-panel" id="contact-panel-other" data-contact-panel="other" role="tabpanel" aria-labelledby="contact-tab-other" hidden>
+            <div class="contact-brief">
+              <p class="kicker">Something else</p>
+              <h2 tabindex="-1">Send it over.</h2>
+              <p>Press, a partnership, or a note that isn't a family order or a school visit. We'll read it and reply from the same inbox.</p>
+              <ul>
+                <li>gamesmoneymind@gmail.com</li>
+                <li><a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a></li>
+                <li><a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a></li>
+              </ul>
+            </div>
+            <form data-subject="Hello from the website">
+              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>This is about</span>
+                <select name="need" data-need required>
+                  <option value="" selected disabled>Choose one</option>
+                  <option>Press</option>
+                  <option>A partnership</option>
+                  <option>A general question</option>
+                </select>
+              </label>
+              <label><span>Message</span><textarea name="message" rows="5" required placeholder="Tell us what you need."></textarea></label>
+              <button class="btn" type="submit">Send email</button>
+              <p class="fine">Sending opens an email to gamesmoneymind@gmail.com.</p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <footer class="site-footer">
       <div class="wrap footer-row">
@@ -61,6 +203,6 @@
         </div>
       </div>
     </footer>
-    <script src="script.js"></script>
+    <script src="script.js?v=8"></script>
   </body>
 </html>

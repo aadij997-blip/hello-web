@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | MoneyMind Games</title>
+    <meta name="description" content="Check out for InvestQuest. Card payment stays on this page and is processed by Square." />
+    <link rel="icon" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=47" />
+  </head>
+  <body class="shop">
+    <div class="promo">Limited Time! Purchase Two Games for Free Shipping</div>
+    <header class="site-header">
+      <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav class="nav" id="site-nav">
+        <a href="index.html">Home</a>
+        <a href="the-problem.html">The Problem</a>
+        <a href="investquest.html">InvestQuest</a>
+        <a href="impact.html">Our Impact</a>
+        <a href="our-team.html">Our Team</a>
+        <a href="contact.html">Contact Us</a>
+        <a class="btn" href="product.html">Shop</a>
+        <a class="nav-cart" href="checkout.html" aria-current="page">Cart <span data-cart-count>0</span></a>
+      </nav>
+    </header>
+
+    <div class="prob-field">
+      <svg class="prob-wander" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <path class="wander-green" d="M-40 10C16 26 14 48-40 64"/>
+        <path class="wander-red" d="M140 4C82 22 84 52 140 70"/>
+      </svg>
+
+      <section class="section shop-checkout">
+        <div class="wrap">
+          <p class="kicker">Checkout</p>
+          <h1>Stay here. <span class="green">Pay with Square.</span></h1>
+          <div class="checkout-grid" data-checkout>
+            <form class="checkout-form" data-checkout-form>
+              <h2>Ship to</h2>
+              <p class="fine">United States only, through USPS. Orders reach the carrier in 1–3 business days and arrive within 8 business days.</p>
+              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>Address</span><input name="address" type="text" required autocomplete="address-line1" /></label>
+              <div class="checkout-row">
+                <label><span>City</span><input name="city" type="text" required autocomplete="address-level2" /></label>
+                <label><span>State</span><input name="state" type="text" required maxlength="2" placeholder="CA" autocomplete="address-level1" /></label>
+                <label><span>ZIP</span><input name="zip" type="text" required inputmode="numeric" pattern="[0-9]{5}" placeholder="92101" autocomplete="postal-code" /></label>
+              </div>
+              <h2>Card</h2>
+              <p class="fine">Your card is entered on this page. Square processes the payment. We never see the card number.</p>
+              <div id="card-container" class="card-container"></div>
+              <p class="checkout-status" data-pay-status role="status"></p>
+              <button class="btn" type="submit">Pay with Square</button>
+            </form>
+            <aside class="checkout-summary" data-checkout-summary>
+              <h2>Order</h2>
+              <div data-summary-body></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <div>
+          <a class="logo" href="index.html"><img src="assets/logo.png" alt="MoneyMind Games" /></a>
+          <p class="fine">© 2026 MoneyMind Games</p>
+        </div>
+        <div class="socials">
+          <a href="mailto:gamesmoneymind@gmail.com">Email</a>
+          <a href="https://www.instagram.com/moneymindgamesofficial">Instagram</a>
+          <a href="https://www.youtube.com/@moneymindgamesofficial">YouTube</a>
+        </div>
+      </div>
+    </footer>
+    <script>
+      window.MM_SQUARE = { applicationId: "", locationId: "LFPCG9BC6WSPQ" };
+    </script>
+    <script src="https://web.squarecdn.com/v1/square.js"></script>
+    <script src="script.js?v=9"></script>
+  </body>
+</html>
