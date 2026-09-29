@@ -518,7 +518,45 @@ if (checkoutForm) {
     const shippingNote = payload.shipping === "Not included"
       ? " Shipping from the address, up to $5.99, was not added to this charge."
       : "";
-    status.textContent = `Paid ${payload.total || charge.totalLabel}.${shippingNote} Square has the order.`;
+    const totalText = payload.total || charge.totalLabel;
+    const shippingLine = payload.shipping === "Not included"
+      ? "The address shipping rate, up to $5.99, was not added to this charge."
+      : "Shipping is free.";
+    let mailed = payload.emailed === true;
+    if (!mailed) {
+      try {
+        const mail = await fetch("https://formsubmit.co/ajax/gamesmoneymind@gmail.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            _replyto: email,
+            _subject: `New InvestQuest order from ${name}`,
+            _template: "table",
+            _captcha: "false",
+            _autoresponse: [
+              `Thanks for your order, ${name}.`,
+              `${PRODUCT_NAME} × ${qty}`,
+              `Total: ${totalText}`,
+              shippingLine,
+              `Ship to: ${address}, ${city}, ${data.get("state")}, ${data.get("zip")}`,
+              "MoneyMind Games ships in the United States by USPS. Orders reach the carrier in 1–3 business days and arrive within 8 business days."
+            ].join("\n"),
+            product: PRODUCT_NAME,
+            quantity: String(qty),
+            total: totalText,
+            shipping: shippingLine,
+            address: `${address}, ${city}, ${String(data.get("state") || "").toUpperCase()} ${String(data.get("zip") || "")}`
+          })
+        });
+        const mailBody = await mail.json().catch(() => ({}));
+        mailed = mail.ok && mailBody.success !== false && String(mailBody.success) !== "false";
+      } catch { /* the payment already succeeded */ }
+    }
+    status.textContent = mailed
+      ? `Paid ${totalText}.${shippingNote} A confirmation email is on its way to ${email}, and MoneyMind Games was notified.`
+      : `Paid ${totalText}.${shippingNote} Square has the order. The confirmation email could not be sent.`;
   });
 }
 
