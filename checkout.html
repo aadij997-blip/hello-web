@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout | MoneyMind Games</title>
-    <meta name="description" content="Check out for InvestQuest. Card payment stays on this page and is processed by Square." />
+    <meta name="description" content="Check out for InvestQuest on Square. Square emails the receipt to the address you enter." />
     <link rel="icon" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,24 +37,13 @@
       <section class="section shop-checkout">
         <div class="wrap">
           <p class="kicker">Checkout</p>
-          <h1>Stay here. <span class="green">Pay with Square.</span></h1>
+          <h1>Pay with <span class="green">Square.</span></h1>
           <div class="checkout-grid" data-checkout>
             <form class="checkout-form" data-checkout-form>
-              <h2>Ship to</h2>
-              <p class="fine">United States only, through USPS. Orders reach the carrier in 1–3 business days and arrive within 8 business days.</p>
-              <label><span>Name</span><input name="name" type="text" required autocomplete="name" /></label>
-              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
-              <label><span>Address</span><input name="address" type="text" required autocomplete="address-line1" /></label>
-              <div class="checkout-row">
-                <label><span>City</span><input name="city" type="text" required autocomplete="address-level2" /></label>
-                <label><span>State</span><input name="state" type="text" required maxlength="2" placeholder="CA" autocomplete="address-level1" /></label>
-                <label><span>ZIP</span><input name="zip" type="text" required inputmode="numeric" pattern="[0-9]{5}" placeholder="92101" autocomplete="postal-code" /></label>
-              </div>
-              <h2>Card</h2>
-              <p class="fine">Your card is entered on this page. Square processes the payment. We never see the card number.</p>
-              <div id="card-container" class="card-container"></div>
+              <h2>Receipt</h2>
+              <p class="fine">Square collects your email, shipping address, and card on the next page, then emails the receipt to that address. United States only, through USPS. Orders reach the carrier in 1–3 business days and arrive within 8 business days.</p>
               <p class="checkout-status" data-pay-status role="status"></p>
-              <button class="btn" type="submit">Pay with Square</button>
+              <a class="btn" data-square-checkout href="https://square.link/u/TSZvzZwI">Continue to Square</a>
             </form>
             <aside class="checkout-summary" data-checkout-summary>
               <h2>Order</h2>
@@ -79,13 +68,15 @@
       </div>
     </footer>
     <script>
-      window.MM_SQUARE = {
-        applicationId: "sq0idp-RGlrwHEkjAgcFKSRgft-Yw",
-        locationId: "LFPCG9BC6WSPQ",
-        payUrl: "https://moneymind-pay.hail-voyage.workers.dev"
+      window.MM_CHECKOUT_LINKS = {
+        1: "https://square.link/u/TSZvzZwI",
+        2: "https://square.link/u/iPm5gs2K",
+        3: "https://square.link/u/oSJdR8mw",
+        4: "https://square.link/u/jOt5k9h1",
+        5: "https://square.link/u/sSgTmJex",
+        6: "https://square.link/u/LDAVmmrl"
       };
     </script>
-    <script src="https://web.squarecdn.com/v1/square.js"></script>
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=15"></script>
   </body>
 </html>

@@ -359,6 +359,19 @@ const renderCart = () => {
       ? "This quantity ships free."
       : "Shipping is calculated from the address, up to $5.99. A second game ships free.";
   }
+  const squareGo = document.querySelector("[data-square-checkout]");
+  const links = window.MM_CHECKOUT_LINKS || {};
+  const status = document.querySelector("[data-checkout-form] [data-pay-status]");
+  if (squareGo) {
+    const link = links[qty];
+    squareGo.href = link || "#";
+    squareGo.setAttribute("aria-disabled", link ? "false" : "true");
+    if (status && !location.search.includes("paid=1")) {
+      status.textContent = link
+        ? "Square emails the receipt to the address you enter on the next page."
+        : "Choose 1 to 6 games to continue to Square.";
+    }
+  }
 };
 
 const writeQty = (qty) => {
@@ -423,140 +436,14 @@ document.addEventListener("change", (event) => {
 const checkoutForm = document.querySelector("[data-checkout-form]");
 if (checkoutForm) {
   const status = checkoutForm.querySelector("[data-pay-status]");
-  let card = null;
   if (!readQty()) writeQty(1);
-  const square = window.MM_SQUARE || {};
-
-  const startCard = async () => {
-    if (!window.Square || !square.applicationId || !square.locationId) return;
-    const payments = window.Square.payments(square.applicationId, square.locationId);
-    card = await payments.card({
-      style: {
-        input: { color: "#ffffff", backgroundColor: "#141414" },
-        "input::placeholder": { color: "#9a9a9a" },
-        ".input-container": { borderColor: "rgba(255,255,255,0.12)" }
-      }
-    });
-    await card.attach("#card-container");
-  };
-
-  startCard().catch((error) => {
-    status.textContent = error?.message
-      ? `Square’s card form didn’t load. ${error.message}`
-      : "Square’s card form didn’t load. You can still review the order.";
-  });
-
-  checkoutForm.addEventListener("submit", async (event) => {
+  if (location.search.includes("paid=1") && status) {
+    status.textContent = "Square is emailing the receipt to the address you entered at checkout.";
+  }
+  checkoutForm.addEventListener("click", (event) => {
+    const go = event.target.closest("[data-square-checkout]");
+    if (!go || go.getAttribute("href") !== "#") return;
     event.preventDefault();
-    const qty = readQty();
-    if (!qty) {
-      status.textContent = "Add InvestQuest to your cart before paying.";
-      return;
-    }
-    if (!checkoutForm.reportValidity()) return;
-    if (!card) {
-      status.textContent = "Square’s card form isn’t connected yet, so the payment stays on this page until it is.";
-      return;
-    }
-    const data = new FormData(checkoutForm);
-    const name = String(data.get("name") || "").trim();
-    const nameParts = name.split(/\s+/);
-    const charge = chargeFor(qty);
-    status.textContent = "Sending the card to Square…";
-    const result = await card.tokenize({
-      amount: ((charge.total ?? charge.subtotal) / 100).toFixed(2),
-      currencyCode: "USD",
-      intent: "CHARGE",
-      customerInitiated: true,
-      sellerKeyedIn: false,
-      billingContact: {
-        givenName: nameParts[0],
-        familyName: nameParts.slice(1).join(" ") || nameParts[0],
-        email: String(data.get("email") || ""),
-        addressLines: [String(data.get("address") || "")],
-        city: String(data.get("city") || ""),
-        state: String(data.get("state") || "").toUpperCase(),
-        postalCode: String(data.get("zip") || ""),
-        countryCode: "US"
-      }
-    });
-    if (result.status !== "OK") {
-      status.textContent = "Square couldn’t read that card. Check the number and try again.";
-      return;
-    }
-    if (!square.payUrl) {
-      status.textContent = "Square’s card form is connected. The charge itself waits on the access token, which has to be saved on the payment server.";
-      return;
-    }
-    let response;
-    try {
-      response = await fetch(square.payUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sourceId: result.token,
-          idempotencyKey: crypto.randomUUID(),
-          quantity: qty,
-          name,
-          email: String(data.get("email") || ""),
-          address: String(data.get("address") || ""),
-          city: String(data.get("city") || ""),
-          state: String(data.get("state") || "").toUpperCase(),
-          zip: String(data.get("zip") || "")
-        })
-      });
-    } catch {
-      status.textContent = "The payment server didn’t respond. Try again in a moment.";
-      return;
-    }
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok) {
-      status.textContent = payload.error || "Square declined the payment. Check the card and try again.";
-      return;
-    }
-    writeQty(0);
-    const shippingNote = payload.shipping === "Not included"
-      ? " Shipping from the address, up to $5.99, was not added to this charge."
-      : "";
-    const totalText = payload.total || charge.totalLabel;
-    const shippingLine = payload.shipping === "Not included"
-      ? "The address shipping rate, up to $5.99, was not added to this charge."
-      : "Shipping is free.";
-    let mailed = payload.emailed === true;
-    if (!mailed) {
-      try {
-        const mail = await fetch("https://formsubmit.co/ajax/gamesmoneymind@gmail.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            name,
-            email,
-            _replyto: email,
-            _subject: `New InvestQuest order from ${name}`,
-            _template: "table",
-            _captcha: "false",
-            _autoresponse: [
-              `Thanks for your order, ${name}.`,
-              `${PRODUCT_NAME} × ${qty}`,
-              `Total: ${totalText}`,
-              shippingLine,
-              `Ship to: ${address}, ${city}, ${data.get("state")}, ${data.get("zip")}`,
-              "MoneyMind Games ships in the United States by USPS. Orders reach the carrier in 1–3 business days and arrive within 8 business days."
-            ].join("\n"),
-            product: PRODUCT_NAME,
-            quantity: String(qty),
-            total: totalText,
-            shipping: shippingLine,
-            address: `${address}, ${city}, ${String(data.get("state") || "").toUpperCase()} ${String(data.get("zip") || "")}`
-          })
-        });
-        const mailBody = await mail.json().catch(() => ({}));
-        mailed = mail.ok && mailBody.success !== false && String(mailBody.success) !== "false";
-      } catch { /* the payment already succeeded */ }
-    }
-    status.textContent = mailed
-      ? `Paid ${totalText}.${shippingNote} A confirmation email is on its way to ${email}, and MoneyMind Games was notified.`
-      : `Paid ${totalText}.${shippingNote} Square has the order. The confirmation email could not be sent.`;
   });
 }
 
