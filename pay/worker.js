@@ -1,6 +1,7 @@
 const UNIT_CENTS = 1599;
 const LOCATION_ID = "LFPCG9BC6WSPQ";
-const SQUARE_VERSION = "2026-08-19";
+const SQUARE_VERSION = "2026-09-16";
+const PRODUCT_NAME = "InvestQuest Financial Literacy Card Game";
 const ALLOWED = new Set([
   "https://playmoneymind.com",
   "https://www.playmoneymind.com"
@@ -23,10 +24,32 @@ const json = (body, status, origin) =>
 
 const clean = (value, max) => String(value || "").trim().slice(0, max);
 
+const square = async (env, path, payload, method = "POST") => {
+  const response = await fetch(`https://connect.squareup.com${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+      "Content-Type": "application/json",
+      "Square-Version": SQUARE_VERSION
+    },
+    body: payload ? JSON.stringify(payload) : undefined
+  });
+  const body = await response.json().catch(() => ({}));
+  return { response, body };
+};
+
+const customerError = (body) => {
+  const detail = String(body?.errors?.[0]?.detail || body?.errors?.[0]?.code || "");
+  return /declin|card|cvv|postal|avs|insufficient|invalid|nonce|source/i.test(detail)
+    ? "Square declined the payment. Check the card and try again."
+    : "Square couldn’t complete the payment. Try again in a moment.";
+};
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors(origin) });
+    if (request.method === "GET") return json({ ok: true }, 200, origin);
     if (request.method !== "POST") return json({ error: "Use POST." }, 405, origin);
     if (!env.SQUARE_ACCESS_TOKEN) {
       return json({ error: "The payment server is missing its Square access token." }, 500, origin);
@@ -62,59 +85,88 @@ export default {
       return json({ error: "Check the name, email, and US shipping address." }, 400, origin);
     }
 
-    const subtotal = qty * UNIT_CENTS;
     const freeShipping = qty >= 2;
-    const total = subtotal;
-    const note = [
-      `InvestQuest Financial Literacy Card Game x${qty}`,
-      name,
-      `${address}, ${city}, ${state} ${zip}`,
-      freeShipping
-        ? "Shipping: free, two or more games."
-        : "Shipping: address rate up to $5.99 was not added to this charge."
-    ].join("\n");
+    const lineItems = [
+      {
+        name: PRODUCT_NAME,
+        quantity: String(qty),
+        base_price_money: { amount: UNIT_CENTS, currency: "USD" }
+      }
+    ];
+    if (freeShipping) {
+      lineItems.push({
+        name: "Shipping",
+        quantity: "1",
+        base_price_money: { amount: 0, currency: "USD" },
+        note: "Two or more games ship free."
+      });
+    }
 
-    const squareResponse = await fetch("https://connect.squareup.com/v2/payments", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
-        "Square-Version": SQUARE_VERSION
-      },
-      body: JSON.stringify({
-        source_id: sourceId,
-        idempotency_key: idempotencyKey,
-        amount_money: { amount: total, currency: "USD" },
+    const created = await square(env, "/v2/orders", {
+      idempotency_key: `${idempotencyKey}-order`,
+      order: {
         location_id: LOCATION_ID,
-        autocomplete: true,
-        buyer_email_address: email,
-        note: note.slice(0, 500),
-        shipping_address: {
-          address_line_1: address,
-          locality: city,
-          administrative_district_level_1: state,
-          postal_code: zip,
-          country: "US",
-          first_name: given.slice(0, 100),
-          last_name: family.slice(0, 100)
-        }
-      })
+        line_items: lineItems,
+        fulfillments: [
+          {
+            type: "SHIPMENT",
+            shipment_details: {
+              recipient: {
+                display_name: name,
+                email_address: email,
+                address: {
+                  address_line_1: address,
+                  locality: city,
+                  administrative_district_level_1: state,
+                  postal_code: zip,
+                  country: "US",
+                  first_name: given.slice(0, 100),
+                  last_name: family.slice(0, 100)
+                }
+              }
+            }
+          }
+        ]
+      }
     });
-
-    const squareBody = await squareResponse.json().catch(() => ({}));
-    if (!squareResponse.ok) {
-      const detail = String(squareBody?.errors?.[0]?.detail || squareBody?.errors?.[0]?.code || "");
-      const declined = /declin|card|cvv|postal|avs|insufficient|invalid|nonce|source/i.test(detail);
+    const order = created.body?.order;
+    if (!created.response.ok || !order?.id || !order.total_money) {
       return json({
-        error: declined
-          ? "Square declined the payment. Check the card and try again."
-          : "Square couldn’t complete the payment. Try again in a moment."
+        error: customerError(created.body),
+        code: created.body?.errors?.[0]?.code || "ORDER"
+      }, 402, origin);
+    }
+
+    const paid = await square(env, "/v2/payments", {
+      source_id: sourceId,
+      idempotency_key: idempotencyKey,
+      amount_money: order.total_money,
+      order_id: order.id,
+      location_id: LOCATION_ID,
+      autocomplete: true,
+      buyer_email_address: email,
+      note: freeShipping
+        ? `${PRODUCT_NAME} x${qty}. Shipping free.`
+        : `${PRODUCT_NAME} x${qty}. Address shipping up to $5.99 was not added.`
+    });
+    if (!paid.response.ok) {
+      await square(env, `/v2/orders/${order.id}`, {
+        order: {
+          version: order.version,
+          location_id: LOCATION_ID,
+          state: "CANCELED"
+        }
+      }, "PUT");
+      return json({
+        error: customerError(paid.body),
+        code: paid.body?.errors?.[0]?.code || "PAYMENT"
       }, 402, origin);
     }
 
     return json({
-      receipt: squareBody?.payment?.id || "saved",
-      total: money(total),
+      receipt: paid.body?.payment?.id || "saved",
+      orderId: order.id,
+      total: money(order.total_money.amount),
       shipping: freeShipping ? "Free" : "Not included"
     }, 200, origin);
   }

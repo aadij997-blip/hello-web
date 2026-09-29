@@ -288,9 +288,14 @@ const PRODUCT_NAME = "InvestQuest Financial Literacy Card Game";
 
 const money = (cents) => (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
 
+let memoryQty = 0;
+
 const readQty = () => {
-  const raw = Number(localStorage.getItem(CART_KEY) || 0);
-  return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0;
+  try {
+    const raw = Number(localStorage.getItem(CART_KEY) || 0);
+    if (Number.isFinite(raw) && raw > 0) return Math.floor(raw);
+  } catch { /* private browsing can block storage */ }
+  return memoryQty;
 };
 
 const chargeFor = (qty) => {
@@ -358,8 +363,11 @@ const renderCart = () => {
 
 const writeQty = (qty) => {
   const next = Math.max(0, Math.floor(Number(qty) || 0));
-  if (next) localStorage.setItem(CART_KEY, String(next));
-  else localStorage.removeItem(CART_KEY);
+  memoryQty = next;
+  try {
+    if (next) localStorage.setItem(CART_KEY, String(next));
+    else localStorage.removeItem(CART_KEY);
+  } catch { /* private browsing can block storage */ }
   renderCart();
 };
 
@@ -416,6 +424,7 @@ const checkoutForm = document.querySelector("[data-checkout-form]");
 if (checkoutForm) {
   const status = checkoutForm.querySelector("[data-pay-status]");
   let card = null;
+  if (!readQty()) writeQty(1);
   const square = window.MM_SQUARE || {};
 
   const startCard = async () => {
@@ -509,7 +518,7 @@ if (checkoutForm) {
     const shippingNote = payload.shipping === "Not included"
       ? " Shipping from the address, up to $5.99, was not added to this charge."
       : "";
-    status.textContent = `Paid ${payload.total || charge.totalLabel}.${shippingNote}`;
+    status.textContent = `Paid ${payload.total || charge.totalLabel}.${shippingNote} Square has the order.`;
   });
 }
 
