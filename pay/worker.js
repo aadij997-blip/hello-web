@@ -63,6 +63,42 @@ export default {
     }
 
     const qty = Math.floor(Number(body.quantity));
+    if (body.action === "link") {
+      if (!Number.isInteger(qty) || qty < 1 || qty > 6) {
+        return json({ error: "Choose a quantity between 1 and 6." }, 400, origin);
+      }
+      const lineItems = [{
+        name: PRODUCT_NAME,
+        quantity: String(qty),
+        base_price_money: { amount: UNIT_CENTS, currency: "USD" }
+      }];
+      if (qty >= 2) {
+        lineItems.push({
+          name: "Shipping",
+          quantity: "1",
+          note: "Two or more games ship free.",
+          base_price_money: { amount: 0, currency: "USD" }
+        });
+      }
+      const created = await square(env, "/v2/online-checkout/payment-links", {
+        idempotency_key: crypto.randomUUID(),
+        description: `${PRODUCT_NAME} x${qty}`,
+        payment_note: "InvestQuest order from playmoneymind.com",
+        order: { location_id: LOCATION_ID, line_items: lineItems },
+        checkout_options: {
+          allow_tipping: false,
+          ask_for_shipping_address: true,
+          merchant_support_email: "gamesmoneymind@gmail.com",
+          redirect_url: "https://playmoneymind.com/checkout.html?paid=1"
+        }
+      });
+      const url = created.body?.payment_link?.url;
+      if (!created.response.ok || !url) {
+        return json({ error: "Square checkout didn’t open. Try again." }, 502, origin);
+      }
+      return json({ url }, 200, origin);
+    }
+
     const sourceId = clean(body.sourceId, 200);
     const name = clean(body.name, 200);
     const email = clean(body.email, 200);

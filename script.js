@@ -359,18 +359,11 @@ const renderCart = () => {
       ? "This quantity ships free."
       : "Shipping is calculated from the address, up to $5.99. A second game ships free.";
   }
-  const squareGo = document.querySelector("[data-square-checkout]");
-  const links = window.MM_CHECKOUT_LINKS || {};
   const status = document.querySelector("[data-checkout-form] [data-pay-status]");
-  if (squareGo) {
-    const link = links[qty];
-    squareGo.href = link || "#";
-    squareGo.setAttribute("aria-disabled", link ? "false" : "true");
-    if (status && !location.search.includes("paid=1")) {
-      status.textContent = link
-        ? "Square emails the receipt to the address you enter on the next page."
-        : "Choose 1 to 6 games to continue to Square.";
-    }
+  if (status && document.querySelector("[data-square-checkout]") && !location.search.includes("paid=1")) {
+    status.textContent = qty >= 1 && qty <= 6
+      ? "Square emails the receipt to the address you enter on the next page."
+      : "Choose 1 to 6 games to continue to Square.";
   }
 };
 
@@ -440,10 +433,22 @@ if (checkoutForm) {
   if (location.search.includes("paid=1") && status) {
     status.textContent = "Square is emailing the receipt to the address you entered at checkout.";
   }
-  checkoutForm.addEventListener("click", (event) => {
-    const go = event.target.closest("[data-square-checkout]");
-    if (!go || go.getAttribute("href") !== "#") return;
-    event.preventDefault();
+  checkoutForm.addEventListener("submit", (event) => event.preventDefault());
+  checkoutForm.querySelector("[data-square-checkout]")?.addEventListener("click", () => {
+    const qty = readQty();
+    const pool = (window.MM_CHECKOUT_LINKS || {})[qty] || [];
+    let used = [];
+    try { used = JSON.parse(localStorage.getItem("mm-used-links") || "[]"); } catch { used = []; }
+    const url = pool.find((link) => !used.includes(link));
+    if (!url) {
+      status.textContent = qty >= 1 && qty <= 6
+        ? "Square checkout needs a new link for this quantity. Try again in a moment."
+        : "Choose 1 to 6 games to continue to Square.";
+      return;
+    }
+    used.push(url);
+    try { localStorage.setItem("mm-used-links", JSON.stringify(used)); } catch { /* still open the link */ }
+    location.assign(url);
   });
 }
 
