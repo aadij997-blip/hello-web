@@ -130,33 +130,39 @@ export default {
       }
     });
     const order = created.body?.order;
-    if (!created.response.ok || !order?.id || !order.total_money) {
-      return json({
-        error: customerError(created.body),
-        code: created.body?.errors?.[0]?.code || "ORDER"
-      }, 402, origin);
-    }
-
+    const orderReady = created.response.ok && order?.id && order.total_money;
+    const amount = orderReady ? order.total_money : { amount: qty * UNIT_CENTS, currency: "USD" };
     const paid = await square(env, "/v2/payments", {
       source_id: sourceId,
       idempotency_key: idempotencyKey,
-      amount_money: order.total_money,
-      order_id: order.id,
+      amount_money: amount,
+      ...(orderReady ? { order_id: order.id } : {}),
       location_id: LOCATION_ID,
       autocomplete: true,
       buyer_email_address: email,
+      shipping_address: {
+        address_line_1: address,
+        locality: city,
+        administrative_district_level_1: state,
+        postal_code: zip,
+        country: "US",
+        first_name: given.slice(0, 100),
+        last_name: family.slice(0, 100)
+      },
       note: freeShipping
         ? `${PRODUCT_NAME} x${qty}. Shipping free.`
         : `${PRODUCT_NAME} x${qty}. Address shipping up to $5.99 was not added.`
     });
     if (!paid.response.ok) {
-      await square(env, `/v2/orders/${order.id}`, {
-        order: {
-          version: order.version,
-          location_id: LOCATION_ID,
-          state: "CANCELED"
-        }
-      }, "PUT");
+      if (orderReady) {
+        await square(env, `/v2/orders/${order.id}`, {
+          order: {
+            version: order.version,
+            location_id: LOCATION_ID,
+            state: "CANCELED"
+          }
+        }, "PUT");
+      }
       return json({
         error: customerError(paid.body),
         code: paid.body?.errors?.[0]?.code || "PAYMENT"
@@ -165,8 +171,8 @@ export default {
 
     return json({
       receipt: paid.body?.payment?.id || "saved",
-      orderId: order.id,
-      total: money(order.total_money.amount),
+      orderId: orderReady ? order.id : "",
+      total: money(amount.amount),
       shipping: freeShipping ? "Free" : "Not included"
     }, 200, origin);
   }
