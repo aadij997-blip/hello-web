@@ -2,3 +2,7 @@
 *.log
 .vscode/
 .idea/
+.env
+.dev.vars
+*.secrets
+pay/.wrangler/

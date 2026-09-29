@@ -479,28 +479,37 @@ if (checkoutForm) {
       status.textContent = "Square’s card form is connected. The charge itself waits on the access token, which has to be saved on the payment server.";
       return;
     }
-    const response = await fetch(square.payUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sourceId: result.token,
-        idempotencyKey: crypto.randomUUID(),
-        quantity: qty,
-        name,
-        email: String(data.get("email") || ""),
-        address: String(data.get("address") || ""),
-        city: String(data.get("city") || ""),
-        state: String(data.get("state") || "").toUpperCase(),
-        zip: String(data.get("zip") || "")
-      })
-    });
+    let response;
+    try {
+      response = await fetch(square.payUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sourceId: result.token,
+          idempotencyKey: crypto.randomUUID(),
+          quantity: qty,
+          name,
+          email: String(data.get("email") || ""),
+          address: String(data.get("address") || ""),
+          city: String(data.get("city") || ""),
+          state: String(data.get("state") || "").toUpperCase(),
+          zip: String(data.get("zip") || "")
+        })
+      });
+    } catch {
+      status.textContent = "The payment server didn’t respond. Try again in a moment.";
+      return;
+    }
     const payload = await response.json().catch(() => ({}));
     if (!response.ok) {
       status.textContent = payload.error || "Square declined the payment. Check the card and try again.";
       return;
     }
     writeQty(0);
-    status.textContent = `Paid ${charge.totalLabel}. Square receipt ${payload.receipt || "is in your Square dashboard."}`;
+    const shippingNote = payload.shipping === "Not included"
+      ? " Shipping from the address, up to $5.99, was not added to this charge."
+      : "";
+    status.textContent = `Paid ${payload.total || charge.totalLabel}.${shippingNote}`;
   });
 }
 
