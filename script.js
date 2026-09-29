@@ -283,6 +283,7 @@ if (contact) {
 
 const CART_KEY = "mm-cart";
 const UNIT_CENTS = 1599;
+const MAX_SHIP_CENTS = 599;
 const PRODUCT_NAME = "InvestQuest Financial Literacy Card Game";
 
 const money = (cents) => (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
@@ -292,9 +293,20 @@ const readQty = () => {
   return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0;
 };
 
-const shippingFor = (qty) => (qty >= 2
-  ? { label: "Free", note: "Two or more games ship free." }
-  : { label: "USPS", note: "A single game ships by USPS. Two or more ship free." });
+const chargeFor = (qty) => {
+  const subtotal = qty * UNIT_CENTS;
+  const freeShipping = qty >= 2;
+  return {
+    subtotal,
+    shipping: freeShipping ? 0 : null,
+    total: freeShipping ? subtotal : null,
+    shipLabel: freeShipping ? "Free" : "Up to $5.99",
+    totalLabel: freeShipping ? money(subtotal) : `Up to ${money(subtotal + MAX_SHIP_CENTS)}`,
+    note: freeShipping
+      ? "Two or more games ship free."
+      : "Square calculates shipping from the address. A single game is $0.00 to $5.99."
+  };
+};
 
 const renderCart = () => {
   const qty = readQty();
@@ -305,8 +317,7 @@ const renderCart = () => {
   const summary = document.querySelector("[data-summary-body]");
   const note = document.querySelector("[data-ship-note]");
   const line = (count) => {
-    const subtotal = count * UNIT_CENTS;
-    const shipInfo = shippingFor(count);
+    const charge = chargeFor(count);
     return `
       <div class="cart-line">
         <img src="assets/product-1.png" alt="" />
@@ -321,10 +332,11 @@ const renderCart = () => {
         </div>
       </div>
       <div class="cart-totals">
-        <div><span>Subtotal</span><span>${money(subtotal)}</span></div>
-        <div><span>Shipping</span><span>${shipInfo.label}</span></div>
+        <div><span>Subtotal</span><span>${money(charge.subtotal)}</span></div>
+        <div><span>Shipping</span><span>${charge.shipLabel}</span></div>
+        <div><span>Total</span><span>${charge.totalLabel}</span></div>
       </div>
-      <p class="fine">${shipInfo.note} US shipping only. No returns, with a refund available within 24 hours of a sale.</p>`;
+      <p class="fine">${charge.note} US shipping only. No returns, with a refund available within 24 hours of a sale.</p>`;
   };
   if (body) {
     body.innerHTML = qty
@@ -340,7 +352,7 @@ const renderCart = () => {
     const pending = Math.max(1, Number(document.querySelector(".shop-add input")?.value) || 1);
     note.textContent = pending >= 2
       ? "This quantity ships free."
-      : "Add a second game and shipping is free.";
+      : "Shipping is calculated from the address, up to $5.99. A second game ships free.";
   }
 };
 
@@ -419,13 +431,16 @@ if (checkoutForm) {
     await card.attach("#card-container");
   };
 
-  startCard().catch(() => {
-    status.textContent = "Square’s card form didn’t load. You can still review the order.";
+  startCard().catch((error) => {
+    status.textContent = error?.message
+      ? `Square’s card form didn’t load. ${error.message}`
+      : "Square’s card form didn’t load. You can still review the order.";
   });
 
   checkoutForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!readQty()) {
+    const qty = readQty();
+    if (!qty) {
       status.textContent = "Add InvestQuest to your cart before paying.";
       return;
     }
@@ -434,13 +449,58 @@ if (checkoutForm) {
       status.textContent = "Square’s card form isn’t connected yet, so the payment stays on this page until it is.";
       return;
     }
+    const data = new FormData(checkoutForm);
+    const name = String(data.get("name") || "").trim();
+    const nameParts = name.split(/\s+/);
+    const charge = chargeFor(qty);
     status.textContent = "Sending the card to Square…";
-    const result = await card.tokenize();
+    const result = await card.tokenize({
+      amount: ((charge.total ?? charge.subtotal) / 100).toFixed(2),
+      currencyCode: "USD",
+      intent: "CHARGE",
+      customerInitiated: true,
+      sellerKeyedIn: false,
+      billingContact: {
+        givenName: nameParts[0],
+        familyName: nameParts.slice(1).join(" ") || nameParts[0],
+        email: String(data.get("email") || ""),
+        addressLines: [String(data.get("address") || "")],
+        city: String(data.get("city") || ""),
+        state: String(data.get("state") || "").toUpperCase(),
+        postalCode: String(data.get("zip") || ""),
+        countryCode: "US"
+      }
+    });
     if (result.status !== "OK") {
       status.textContent = "Square couldn’t read that card. Check the number and try again.";
       return;
     }
-    status.textContent = "Square accepted the card details. Charging the order needs the payment server connected to your Square account.";
+    if (!square.payUrl) {
+      status.textContent = "Square’s card form is connected. The charge itself waits on the access token, which has to be saved on the payment server.";
+      return;
+    }
+    const response = await fetch(square.payUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sourceId: result.token,
+        idempotencyKey: crypto.randomUUID(),
+        quantity: qty,
+        name,
+        email: String(data.get("email") || ""),
+        address: String(data.get("address") || ""),
+        city: String(data.get("city") || ""),
+        state: String(data.get("state") || "").toUpperCase(),
+        zip: String(data.get("zip") || "")
+      })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      status.textContent = payload.error || "Square declined the payment. Check the card and try again.";
+      return;
+    }
+    writeQty(0);
+    status.textContent = `Paid ${charge.totalLabel}. Square receipt ${payload.receipt || "is in your Square dashboard."}`;
   });
 }
 
