@@ -345,7 +345,7 @@ const renderCart = () => {
   };
   if (body) {
     body.innerHTML = qty
-      ? `${line(qty)}<a class="btn" href="checkout.html">Checkout</a>`
+      ? `${line(qty)}<a class="btn" href="cart.html">Checkout</a>`
       : `<p class="cart-empty">Your cart is empty.</p><p><a class="btn" href="product.html">Shop InvestQuest</a></p>`;
   }
   if (summary) {

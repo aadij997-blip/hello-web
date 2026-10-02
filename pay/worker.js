@@ -72,7 +72,7 @@ export default {
           allow_tipping: false,
           ask_for_shipping_address: true,
           merchant_support_email: "gamesmoneymind@gmail.com",
-          redirect_url: "https://playmoneymind.com/checkout.html?paid=1"
+          redirect_url: "https://playmoneymind.com/cart.html?paid=1"
         }
       })
     });
